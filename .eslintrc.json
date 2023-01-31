@@ -1,0 +1,51 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "env": { "es6": true },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "better-styled-components",
+    "import"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module" // Allows for the use of imports
+  },
+  "rules": {
+    "import/first": "warn",
+    "import/newline-after-import": "warn",
+    "import/no-duplicates": "error",
+    "import/order": "off",
+    "prettier/prettier": 2,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "no-console": 0,
+    "react/no-unescaped-entities": 0,
+    "ban-ts-ignore": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    // "sort-keys": [1, "asc", { "caseSensitive": true, "natural": false, "minKeys": 2 }],
+    "no-case-declarations": 0,
+    "jsx-a11y/anchor-has-content": "off",
+    "jsx-a11y/heading-has-content": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/alt-text": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-inferrable-types": "off"
+  },
+  "globals": { "React": "writable" }
+}
