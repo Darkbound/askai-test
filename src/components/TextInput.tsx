@@ -17,8 +17,7 @@ export const TextInput = ({ name, className, control, ...props }: TextInputProps
   } = useController({
     name,
     control,
-    rules: { required: true },
-    defaultValue: ""
+    rules: { required: true }
   });
 
   const onChangeHandler = useCallback<ChangeEventHandler<HTMLInputElement>>(

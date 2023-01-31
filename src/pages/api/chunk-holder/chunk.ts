@@ -1,13 +1,12 @@
 import nc from "next-connect";
-import { NextApiRequest, NextApiResponse } from "next";
-import { ApiResponseBase, GetChunkReq } from "types";
+import { NextApiResponse } from "next";
+import { ApiResponseBase, GetChunkReq, GetChunkRes } from "types";
 import { chunkHolderAxios } from "services";
+import { getChunksSchema } from "schemas/getChunksSchema";
 
-export interface HelloResponse {}
-
-const handler = nc<GetChunkReq, NextApiResponse<ApiResponseBase<HelloResponse>>>({
+const handler = nc<GetChunkReq, NextApiResponse<ApiResponseBase<GetChunkRes>>>({
   onError: (err, req, res, next) => {
-    console.log(err);
+    console.log(err.message);
 
     res.status(err.statusCode || 500).json({ error: err.message });
   },
@@ -15,7 +14,7 @@ const handler = nc<GetChunkReq, NextApiResponse<ApiResponseBase<HelloResponse>>>
     res.status(404).end("Page not found");
   }
 }).get(async (req, res) => {
-  const { chunkId, accessToken } = req.query;
+  const { chunkId, accessToken } = getChunksSchema.parse(req.query);
 
   const chunksRes = await chunkHolderAxios.get(`/chunks/${chunkId}`, {
     headers: {

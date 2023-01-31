@@ -29,13 +29,22 @@ export const AskAQuestionForm = ({ className, ...props }: AskAQuestionFormProps)
 
   const form = useForm<QuestionSchemaType>({
     resolver: zodResolver(questionSchema),
-    mode: "all",
-    defaultValues: {
-      question: ""
-    }
+    mode: "all"
   });
 
-  const { control, handleSubmit } = form;
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = form;
+
+  useEffect(() => {
+    if (errors.question) {
+      setError(errors.question.message || null);
+    } else {
+      setError(null);
+    }
+  }, [errors]);
 
   const onSubmit: SubmitHandler<QuestionSchemaType> = async ({ question }) => {
     try {
@@ -62,7 +71,7 @@ export const AskAQuestionForm = ({ className, ...props }: AskAQuestionFormProps)
   return (
     <form {...props} className={classes} onSubmit={handleSubmit(onSubmit)}>
       <div className="flex">
-        <TextInput name="question" className="w-full h-fit" placeholder="HELLOOOOOOO" control={control} />
+        <TextInput name="question" className="w-full h-fit" placeholder="Ask a question" control={control} />
         <Button className="self-center">Get Answers</Button>
       </div>
       {error && <div className="text-red-600">{error}</div>}

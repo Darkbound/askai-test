@@ -39,8 +39,6 @@ export const GlobalContextProvider = ({ children }) => {
   useEffect(() => {
     const lsAccessToken = localStorage.getItem("chunksHolderAccessToken");
 
-    console.log({ lsAccessToken });
-
     let invalidateAccessTokenTimeout: NodeJS.Timeout;
 
     if (lsAccessToken && getTokenExpiration(lsAccessToken) > 0) {
@@ -88,8 +86,6 @@ export const GlobalContextProvider = ({ children }) => {
 
     return currentAccessToken;
   };
-
-  console.log(accessToken);
 
   return (
     <GlobalContext.Provider value={{ answers, getCurrentAccessToken, setAccessToken, setAnswers, isFetchingAnswers, setIsFetchingAnswers }}>

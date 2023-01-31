@@ -75,7 +75,6 @@ export const useChunksHolder = () => {
 
     const expiration = JSON.parse(Buffer.from(token.split(".")[1], "base64").toString("utf8"));
 
-    console.log("expires in", expiration.exp * 1000 - Date.now());
     return expiration.exp * 1000 - Date.now();
   };
 
