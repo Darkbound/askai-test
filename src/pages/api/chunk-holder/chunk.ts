@@ -3,6 +3,7 @@ import { NextApiResponse } from "next";
 import { ApiResponseBase, GetChunkReq, GetChunkRes } from "types";
 import { chunkHolderAxios } from "services";
 import { getChunksSchema } from "schemas/getChunksSchema";
+import { withRateLimit } from "../rateLimit";
 
 const handler = nc<GetChunkReq, NextApiResponse<ApiResponseBase<GetChunkRes>>>({
   onError: (err, req, res, next) => {
@@ -13,7 +14,7 @@ const handler = nc<GetChunkReq, NextApiResponse<ApiResponseBase<GetChunkRes>>>({
   onNoMatch: (req, res) => {
     res.status(404).end("Page not found");
   }
-}).get(async (req, res) => {
+}).get(withRateLimit("getChunks"), async (req, res) => {
   const { chunkId, accessToken } = getChunksSchema.parse(req.query);
 
   const chunksRes = await chunkHolderAxios.get(`/chunks/${chunkId}`, {

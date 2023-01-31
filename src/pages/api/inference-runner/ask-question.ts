@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { ApiResponseBase, AskAQuestionReq, AskAQuestionRes } from "types";
 import { inferenceRunnerAxios } from "services";
 import { questionSchema } from "schemas";
+import { withRateLimit } from "../rateLimit";
 
 const handler = nc<AskAQuestionReq, NextApiResponse<ApiResponseBase<AskAQuestionRes>>>({
   onError: (err, req, res, next) => {
@@ -13,7 +14,7 @@ const handler = nc<AskAQuestionReq, NextApiResponse<ApiResponseBase<AskAQuestion
   onNoMatch: (req, res) => {
     res.status(404).end("Page not found");
   }
-}).post(async (req, res) => {
+}).post(withRateLimit("askQuestion"), async (req, res) => {
   const { question } = questionSchema.parse(req.body);
 
   const answerRes = await inferenceRunnerAxios.post("/ask", { question });
